@@ -1,4 +1,4 @@
-name: slurm
+name: mini-slurm
 scheduling:
   type: Conditional
   selectors:
@@ -12,9 +12,6 @@ spec:
         - 8888:8888
       volumes:
         - /data/slurm:/home/admin
-      secrets:
-        - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
       restartPolicy: {}
     - name: slurmmaster
       image: rancavil/slurm-master:19.05.5-1
@@ -26,34 +23,6 @@ spec:
         - 6819:6819
       volumes:
         - /data/slurm:/home/admin
-      secrets:
-        - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
-      restartPolicy: {}
-    - name: slurmdbd
-      image: ghcr.io/synpse-hq/slurmdbd:latest
-      volumes:
-        - /data/slurm:/home/admin
-      secrets:
-        - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
-        - name: slurmdbdConf
-          filepath: /etc/slurm-llnl/slurmdbd.conf
-      restartPolicy: {}
-    - name: mariadb
-      image: mariadb
-      hostname: mariadb
-      volumes:
-        - /data/slurm-maria:/var/lib/mysql
-      env:
-        - name: MARIADB_USER
-          value: slurm
-        - name: MARIADB_PASSWORD
-          value: slurmslurm
-        - name: MARIADB_ROOT_PASSWORD
-          value: dbroot-password
-        - name: MARIADB_DATABASE
-          value: slurm
       restartPolicy: {}
     - name: slurmnode1
       image: rancavil/slurm-node:19.05.5-1
@@ -64,9 +33,6 @@ spec:
       env:
         - name: SLURM_NODENAME
           value: slurmnode1
-      secrets:
-        - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
       restartPolicy: {}
     - name: slurmnode2
       image: rancavil/slurm-node:19.05.5-1
@@ -77,9 +43,6 @@ spec:
       env:
         - name: SLURM_NODENAME
           value: slurmnode2
-      secrets:
-        - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
       restartPolicy: {}
     - name: slurmnode3
       image: rancavil/slurm-node:19.05.5-1
@@ -90,7 +53,4 @@ spec:
       env:
         - name: SLURM_NODENAME
           value: slurmnode3
-      secrets:
-        - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
       restartPolicy: {}

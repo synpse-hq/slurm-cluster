@@ -1,5 +1,10 @@
 # Synpse Slurm operator
 
+## Deployment options
+
+- `micro` - JupyterLab, master and compute nodes. Can run srun, sbatch, however no account and storage.
+- `mini` - JupyterLab, master, compute nodes and storage. Can run srun, sbatch, squeue, sacct.
+- `multi` - All + multi-node.
 
 ## Slurm
 
