@@ -1,7 +1,7 @@
 VERSION ?= latest
 
-slurmddb:
+slurmdbd:
 	cd docker/slurmdbd && docker build -f Dockerfile -t ghcr.io/synpse-hq/slurmdbd:${VERSION} .
 
-push-slurmddb: slurmddb
+push-slurmdbd: slurmdbd
 	docker push ghcr.io/synpse-hq/slurmdbd:${VERSION}
