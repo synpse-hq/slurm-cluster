@@ -33,11 +33,11 @@ spec:
     - name: slurmdbd
       image: ghcr.io/synpse-hq/slurmdbd:latest
       hostname: slurmdbd
-      user: admin
-      volumes:
-        - /data/slurm:/home/admin
+      user: root
       ports:
         - 7000:7000
+      volumes:
+        - /data/slurm:/home/admin
       secrets:
         - name: slurmConf
           filepath: /etc/slurm-llnl/slurm.conf
@@ -47,6 +47,8 @@ spec:
     - name: mariadb
       image: mariadb
       hostname: mariadb
+      ports:
+        - 3306:3306
       volumes:
         - /data/slurm-maria:/var/lib/mysql
       env:

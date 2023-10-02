@@ -6,6 +6,30 @@
 - `mini` - JupyterLab, master, compute nodes and storage. Can run srun, sbatch, squeue, sacct.
 - `multi` - All + multi-node.
 
+
+## Setting up mini slurm with accounting and storage
+
+First, need to get the /etc/munge/munge.key shared between all containers. At the moment this is just mounted form the host.
+
+
+Debugging:
+
+1. Had to add the key to the host and change perms/owner
+
+```
+sudo adduser munge
+sudo chmod 400 /etc/munge/munge.key
+sudo chown munge:munge /etc/munge/munge.key
+```
+
+
+2. Somehow slurm master was stopped? Had to SSH, exec into the slurmmaster container and start the service within it.
+
+```
+root@slurmmaster:~# service slurmctld start
+ * Starting slurm central management daemon slurmctld  
+```
+
 ## Slurm
 
 A Slurm scheduler cluster typically consists of the following components:
