@@ -1,4 +1,4 @@
-name: slurm
+name: mini-slurm
 scheduling:
   type: Conditional
   selectors:
@@ -32,8 +32,12 @@ spec:
       restartPolicy: {}
     - name: slurmdbd
       image: ghcr.io/synpse-hq/slurmdbd:latest
+      hostname: slurmdbd
+      user: admin
       volumes:
         - /data/slurm:/home/admin
+      ports:
+        - 7000:7000
       secrets:
         - name: slurmConf
           filepath: /etc/slurm-llnl/slurm.conf
