@@ -12,6 +12,7 @@ spec:
         - 8888:8888
       volumes:
         - /data/slurm:/home/admin
+        - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
           filepath: /etc/slurm-llnl/slurm.conf
@@ -26,6 +27,7 @@ spec:
         - 6819:6819
       volumes:
         - /data/slurm:/home/admin
+        - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
           filepath: /etc/slurm-llnl/slurm.conf
@@ -38,6 +40,7 @@ spec:
         - 7000:7000
       volumes:
         - /data/slurm:/home/admin
+        - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
           filepath: /etc/slurm-llnl/slurm.conf
@@ -50,7 +53,8 @@ spec:
       ports:
         - 3306:3306
       volumes:
-        - /data/slurm-maria:/var/lib/mysql
+        - /data/slurm-maria-db:/var/lib/mysql
+        - /etc/munge:/etc/munge
       env:
         - name: MARIADB_USER
           value: slurm
@@ -67,6 +71,7 @@ spec:
       user: admin
       volumes:
         - /data/slurm:/home/admin
+        - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode1
@@ -80,6 +85,7 @@ spec:
       user: admin
       volumes:
         - /data/slurm:/home/admin
+        - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode2
@@ -93,6 +99,7 @@ spec:
       user: admin
       volumes:
         - /data/slurm:/home/admin
+        - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode3

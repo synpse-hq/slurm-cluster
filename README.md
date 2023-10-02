@@ -22,6 +22,7 @@ sudo chmod 400 /etc/munge/munge.key
 sudo chown munge:munge /etc/munge/munge.key
 ```
 
+2. Trying to use Mariadb root password for the database in the slurmddb. Might help?
 
 2. Somehow slurm master was stopped? Had to SSH, exec into the slurmmaster container and start the service within it.
 
@@ -29,6 +30,33 @@ sudo chown munge:munge /etc/munge/munge.key
 root@slurmmaster:~# service slurmctld start
  * Starting slurm central management daemon slurmctld  
 ```
+
+4. No cluster issues in the database. Port is set but getting:
+
+```
+port is set but still seeing error: "slurmdbd: error: _add_registered_cluster: trying to register a cluster (cluster) with no remote port" in the slurmdbd logs
+```
+
+Attempted:
+
+```
+root@slurmjupyter:/home/admin# sacctmgr show cluste
+   Cluster     ControlHost  ControlPort   RPC     Share GrpJobs       GrpTRES GrpSubmit MaxJobs       MaxTRES MaxSubmit     MaxWall                  QOS   Def QOS 
+---------- --------------- ------------ ----- --------- ------- ------------- --------- ------- ------------- --------- ----------- -------------------- --------- 
+root@slurmjupyter:/home/admin# sacctmgr create cluster cluster
+ Adding Cluster(s)
+  Name           = cluster
+Would you like to commit changes? (You have 30 seconds to decide)
+(N/y): y
+
+root@slurmjupyter:/home/admin# 
+root@slurmjupyter:/home/admin# sacctmgr show cluste
+   Cluster     ControlHost  ControlPort   RPC     Share GrpJobs       GrpTRES GrpSubmit MaxJobs       MaxTRES MaxSubmit     MaxWall                  QOS   Def QOS 
+---------- --------------- ------------ ----- --------- ------- ------------- --------- ------- ------------- --------- ----------- -------------------- --------- 
+   cluster                            0     0         1                                                                                           normal  
+```
+
+After this we have got the cluster tables in
 
 ## Slurm
 
