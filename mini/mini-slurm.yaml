@@ -12,7 +12,7 @@ spec:
         - 8888:8888
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
           filepath: /etc/slurm/slurm.conf
@@ -27,10 +27,12 @@ spec:
         - 6819:6819
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
+          filepath: /etc/slurm/slurm.conf
+        # - name: mungeKey
+        #   filepath: /etc/munge/munge.key
       restartPolicy: {}
     # Slurm database daemon   
     - name: slurmdbd
@@ -41,13 +43,13 @@ spec:
         - 7000:7000
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
+          filepath: /etc/slurm/slurm.conf
           # filepath: /etc/slurm/slurm.conf
         - name: slurmdbdConf
-          filepath: /etc/slurm-llnl/slurmdbd.conf
+          filepath: /etc/slurm/slurmdbd.conf
       restartPolicy: {}
     - name: mariadb
       image: mariadb
@@ -56,7 +58,6 @@ spec:
         - 3306:3306
       volumes:
         - /data/slurm-maria-db:/var/lib/mysql
-        - /etc/munge:/etc/munge
       env:
         - name: MARIADB_USER
           value: slurm
@@ -73,13 +74,13 @@ spec:
       user: admin
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode1
       secrets:
         - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
+          filepath: /etc/slurm/slurm.conf
       restartPolicy: {}
     - name: slurmnode2
       image: ghcr.io/synpse-hq/slurm-node:22.04
@@ -87,13 +88,13 @@ spec:
       user: admin
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode2
       secrets:
         - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
+          filepath: /etc/slurm/slurm.conf
       restartPolicy: {}
     - name: slurmnode3
       image: ghcr.io/synpse-hq/slurm-node:22.04
@@ -101,11 +102,11 @@ spec:
       user: admin
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode3
       secrets:
         - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
+          filepath: /etc/slurm/slurm.conf
       restartPolicy: {}
