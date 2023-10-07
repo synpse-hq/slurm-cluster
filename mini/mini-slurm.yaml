@@ -7,6 +7,7 @@ spec:
   containers:
     - name: slurmjupyter
       image: ghcr.io/synpse-hq/slurm-jupyter:22.04
+      forcePull: true
       hostname: slurmjupyter
       ports:
         - 8888:8888
@@ -19,6 +20,7 @@ spec:
       restartPolicy: {}
     - name: slurmmaster
       image: ghcr.io/synpse-hq/slurm-master:22.04
+      forcePull: true
       hostname: slurmmaster
       user: admin
       ports:
@@ -37,8 +39,9 @@ spec:
     # Slurm database daemon   
     - name: slurmdbd
       image: ghcr.io/synpse-hq/slurmdbd:22.04
+      forcePull: true
       hostname: slurmdbd
-      user: root
+      user: slurm
       ports:
         - 7000:7000
       volumes:
@@ -70,6 +73,7 @@ spec:
       restartPolicy: {}
     - name: slurmnode1
       image: ghcr.io/synpse-hq/slurm-node:22.04
+      forcePull: true
       hostname: slurmnode1
       user: admin
       volumes:
