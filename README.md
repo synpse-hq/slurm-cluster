@@ -41,7 +41,7 @@ port is set but still seeing error: "slurmdbd: error: _add_registered_cluster: t
 Attempted:
 
 ```
-root@slurmjupyter:/home/admin# sacctmgr show cluste
+root@slurmjupyter:/home/admin# sacctmgr show cluster
    Cluster     ControlHost  ControlPort   RPC     Share GrpJobs       GrpTRES GrpSubmit MaxJobs       MaxTRES MaxSubmit     MaxWall                  QOS   Def QOS 
 ---------- --------------- ------------ ----- --------- ------- ------------- --------- ------- ------------- --------- ----------- -------------------- --------- 
 root@slurmjupyter:/home/admin# sacctmgr create cluster cluster
@@ -51,7 +51,7 @@ Would you like to commit changes? (You have 30 seconds to decide)
 (N/y): y
 
 root@slurmjupyter:/home/admin# 
-root@slurmjupyter:/home/admin# sacctmgr show cluste
+root@slurmjupyter:/home/admin# sacctmgr show cluster
    Cluster     ControlHost  ControlPort   RPC     Share GrpJobs       GrpTRES GrpSubmit MaxJobs       MaxTRES MaxSubmit     MaxWall                  QOS   Def QOS 
 ---------- --------------- ------------ ----- --------- ------- ------------- --------- ------- ------------- --------- ----------- -------------------- --------- 
    cluster                            0     0         1                                                                                           normal  

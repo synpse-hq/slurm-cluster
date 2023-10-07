@@ -31,12 +31,12 @@ RUN apt-get update -qq --fix-missing && \
 RUN useradd -m admin -s /usr/bin/bash -d /home/admin && echo "admin:admin" | chpasswd && adduser admin sudo && echo "admin     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers 
 
 # These will be overwritten
-COPY slurm.conf /etc/slurm-llnl/
-COPY cgroup.conf /etc/slurm-llnl/
-COPY docker-entrypoint.sh /etc/slurm-llnl/
+COPY slurm.conf /etc/slurm/
+COPY cgroup.conf /etc/slurm/
+COPY docker-entrypoint.sh /etc/slurm/
 
 
-RUN chown -R admin:admin /etc/slurm-llnl
+RUN chown -R admin:admin /etc/slurm
 
 EXPOSE 6817 6818 6819 3306 
 
