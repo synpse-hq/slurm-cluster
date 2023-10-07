@@ -6,19 +6,21 @@ scheduling:
 spec:
   containers:
     - name: slurmjupyter
-      image: rancavil/slurm-jupyter:19.05.5-1
+      image: ghcr.io/synpse-hq/slurm-jupyter:22.04
+      forcePull: true
       hostname: slurmjupyter
       ports:
         - 8888:8888
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
+          filepath: /etc/slurm/slurm.conf
       restartPolicy: {}
     - name: slurmmaster
-      image: rancavil/slurm-master:19.05.5-1
+      image: ghcr.io/synpse-hq/slurm-master:22.04
+      forcePull: true
       hostname: slurmmaster
       user: admin
       ports:
@@ -27,25 +29,30 @@ spec:
         - 6819:6819
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
+          filepath: /etc/slurm/slurm.conf
+        # - name: mungeKey
+        #   filepath: /etc/munge/munge.key
       restartPolicy: {}
+    # Slurm database daemon   
     - name: slurmdbd
-      image: ghcr.io/synpse-hq/slurmdbd:latest
+      image: ghcr.io/synpse-hq/slurmdbd:22.04
+      forcePull: true
       hostname: slurmdbd
-      user: root
+      user: slurm
       ports:
         - 7000:7000
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
+          filepath: /etc/slurm/slurm.conf
+          # filepath: /etc/slurm/slurm.conf
         - name: slurmdbdConf
-          filepath: /etc/slurm-llnl/slurmdbd.conf
+          filepath: /etc/slurm/slurmdbd.conf
       restartPolicy: {}
     - name: mariadb
       image: mariadb
@@ -54,7 +61,6 @@ spec:
         - 3306:3306
       volumes:
         - /data/slurm-maria-db:/var/lib/mysql
-        - /etc/munge:/etc/munge
       env:
         - name: MARIADB_USER
           value: slurm
@@ -66,44 +72,47 @@ spec:
           value: slurm
       restartPolicy: {}
     - name: slurmnode1
-      image: rancavil/slurm-node:19.05.5-1
+      image: ghcr.io/synpse-hq/slurm-node:22.04
+      forcePull: true
       hostname: slurmnode1
       user: admin
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode1
       secrets:
         - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
+          filepath: /etc/slurm/slurm.conf
       restartPolicy: {}
     - name: slurmnode2
-      image: rancavil/slurm-node:19.05.5-1
+      image: ghcr.io/synpse-hq/slurm-node:22.04
+      forcePull: true
       hostname: slurmnode2
       user: admin
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode2
       secrets:
         - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
+          filepath: /etc/slurm/slurm.conf
       restartPolicy: {}
     - name: slurmnode3
-      image: rancavil/slurm-node:19.05.5-1
+      image: ghcr.io/synpse-hq/slurm-node:22.04
+      forcePull: true
       hostname: slurmnode3
       user: admin
       volumes:
         - /data/slurm:/home/admin
-        - /etc/munge:/etc/munge
+        # - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode3
       secrets:
         - name: slurmConf
-          filepath: /etc/slurm-llnl/slurm.conf
+          filepath: /etc/slurm/slurm.conf
       restartPolicy: {}

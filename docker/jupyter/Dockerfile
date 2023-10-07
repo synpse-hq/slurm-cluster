@@ -7,7 +7,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 SHELL [ "/bin/bash", "-c" ]
 
-
 # Install common dependencies with DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq --fix-missing && \
     apt-get upgrade -y && \
@@ -27,6 +26,7 @@ RUN apt-get update -qq --fix-missing && \
         wget \
         pip \
         slurm-client \
+        netcat \
       && \
     sudo apt-get -o Dpkg::Options::="--force-confmiss" install --reinstall -y netbase && \
     apt-get -y autoclean && \
@@ -35,6 +35,8 @@ RUN apt-get update -qq --fix-missing && \
     rm -rf /var/lib/apt/lists/*
 
 
+RUN pip install jupyterlab_slurm
+
 # RUN apt install slurm-client curl -y
 
 # RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
@@ -42,9 +44,13 @@ RUN useradd -m admin -s /usr/bin/bash -d /home/admin && echo "admin:admin" | chp
 
 RUN pip install jupyterlab
 
-COPY slurm.conf /etc/slurm-llnl/
-COPY cgroup.conf /etc/slurm-llnl/
-COPY docker-entrypoint.sh /etc/slurm-llnl/
+# COPY slurm.conf /etc/slurm/
+COPY docker/jupyter/cgroup.conf /etc/slurm/
+COPY docker/jupyter/docker-entrypoint.sh /etc/slurm/
+
+COPY docker/munge.key /etc/munge/
+RUN sudo chmod 400 /etc/munge/munge.key
+RUN sudo chown munge:munge /etc/munge/munge.key
 
 WORKDIR /home/admin
 
@@ -54,6 +60,6 @@ ENV USER admin
 ENV SHELL bash
 
 # RUN apt install libopenmpi-dev -y && pip install mpi4py && pip install jupyterlab_slurm
-RUN pip install jupyterlab_slurm
+# RUN pip install jupyterlab_slurm
 
-ENTRYPOINT ["/etc/slurm-llnl/docker-entrypoint.sh"]
+ENTRYPOINT ["/etc/slurm/docker-entrypoint.sh"]

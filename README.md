@@ -17,7 +17,8 @@ Debugging:
 1. Had to add the key to the host and change perms/owner
 
 ```
-sudo adduser munge
+sudo groupadd 102 -r munge
+sudo useradd 102 -r -g munge -s /sbin/nologin -d /nonexistent munge
 sudo chmod 400 /etc/munge/munge.key
 sudo chown munge:munge /etc/munge/munge.key
 ```
@@ -40,7 +41,7 @@ port is set but still seeing error: "slurmdbd: error: _add_registered_cluster: t
 Attempted:
 
 ```
-root@slurmjupyter:/home/admin# sacctmgr show cluste
+root@slurmjupyter:/home/admin# sacctmgr show cluster
    Cluster     ControlHost  ControlPort   RPC     Share GrpJobs       GrpTRES GrpSubmit MaxJobs       MaxTRES MaxSubmit     MaxWall                  QOS   Def QOS 
 ---------- --------------- ------------ ----- --------- ------- ------------- --------- ------- ------------- --------- ----------- -------------------- --------- 
 root@slurmjupyter:/home/admin# sacctmgr create cluster cluster
@@ -50,7 +51,7 @@ Would you like to commit changes? (You have 30 seconds to decide)
 (N/y): y
 
 root@slurmjupyter:/home/admin# 
-root@slurmjupyter:/home/admin# sacctmgr show cluste
+root@slurmjupyter:/home/admin# sacctmgr show cluster
    Cluster     ControlHost  ControlPort   RPC     Share GrpJobs       GrpTRES GrpSubmit MaxJobs       MaxTRES MaxSubmit     MaxWall                  QOS   Def QOS 
 ---------- --------------- ------------ ----- --------- ------- ------------- --------- ------- ------------- --------- ----------- -------------------- --------- 
    cluster                            0     0         1                                                                                           normal  
@@ -74,3 +75,6 @@ A Slurm scheduler cluster typically consists of the following components:
 
 Each of these components plays a critical role in the operation of a Slurm scheduler cluster. The Slurm controller is responsible for managing the scheduling and execution of jobs, while the compute nodes are responsible for running the jobs themselves. The Slurm database and accounting storage are used to store information about the jobs and resources in the cluster, while the plugins are used to extend the functionality of the scheduler.
 
+## TODO:
+
+- slurm.conf needs CPUs for each node
