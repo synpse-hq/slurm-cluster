@@ -110,6 +110,8 @@ spec:
       env:
         - name: SLURM_NODENAME
           value: slurmnode3
+        - name: FOO
+          value: BAR
       secrets:
         - name: slurmConf
           filepath: /etc/slurm/slurm.conf

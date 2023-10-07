@@ -26,6 +26,7 @@ RUN apt-get update -qq --fix-missing && \
         wget \
         pip \
         slurm-client \
+        netcat \
       && \
     sudo apt-get -o Dpkg::Options::="--force-confmiss" install --reinstall -y netbase && \
     apt-get -y autoclean && \
