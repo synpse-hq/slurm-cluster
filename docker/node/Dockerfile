@@ -31,9 +31,15 @@ RUN apt-get update -qq --fix-missing && \
 RUN useradd -m admin -s /usr/bin/bash -d /home/admin && echo "admin:admin" | chpasswd && adduser admin sudo && echo "admin     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers 
 
 # These will be overwritten
-COPY slurm.conf /etc/slurm/
-COPY cgroup.conf /etc/slurm/
-COPY docker-entrypoint.sh /etc/slurm/
+COPY docker/node/slurm.conf /etc/slurm/
+COPY docker/node/cgroup.conf /etc/slurm/
+COPY docker/node/docker-entrypoint.sh /etc/slurm/
+
+
+# Authentication
+COPY docker/munge.key /etc/munge/
+RUN sudo chmod 400 /etc/munge/munge.key
+RUN sudo chown munge:munge /etc/munge/munge.key
 
 
 RUN chown -R admin:admin /etc/slurm

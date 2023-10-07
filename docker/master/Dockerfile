@@ -34,6 +34,7 @@ COPY docker/master/slurm.conf /etc/slurm-llnl/
 COPY docker/master/cgroup.conf /etc/slurm-llnl/
 COPY docker/master/docker-entrypoint.sh /etc/slurm-llnl/
 
+# Authentication
 COPY docker/munge.key /etc/munge/
 RUN sudo chmod 400 /etc/munge/munge.key
 RUN sudo chown munge:munge /etc/munge/munge.key

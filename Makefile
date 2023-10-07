@@ -13,7 +13,7 @@ push-master: master
 	docker push ghcr.io/synpse-hq/slurm-master:${VERSION}
 
 node:
-	cd docker/node && docker build -f Dockerfile --platform linux/amd64 -t ghcr.io/synpse-hq/slurm-node:${VERSION} .
+	docker build -f docker/node/Dockerfile --platform linux/amd64 -t ghcr.io/synpse-hq/slurm-node:${VERSION} .
 
 push-node: node
 	docker push ghcr.io/synpse-hq/slurm-node:${VERSION}

@@ -88,6 +88,7 @@ spec:
       restartPolicy: {}
     - name: slurmnode2
       image: ghcr.io/synpse-hq/slurm-node:22.04
+      forcePull: true
       hostname: slurmnode2
       user: admin
       volumes:
@@ -102,6 +103,7 @@ spec:
       restartPolicy: {}
     - name: slurmnode3
       image: ghcr.io/synpse-hq/slurm-node:22.04
+      forcePull: true
       hostname: slurmnode3
       user: admin
       volumes:
@@ -110,8 +112,6 @@ spec:
       env:
         - name: SLURM_NODENAME
           value: slurmnode3
-        - name: FOO
-          value: BAR
       secrets:
         - name: slurmConf
           filepath: /etc/slurm/slurm.conf
