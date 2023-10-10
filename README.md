@@ -146,7 +146,7 @@ Then, go to your profile page https://cloud.synpse.net/profile and click on "New
 With CLI configured, run:
 
 ```
-synpse device proxy mini-slurm 8888
+synpse device proxy mini-slurm 8888:8888
 ```
 
 This creates a secure tunnel to our Slurm cluster machine, open it on http://localhost:8888:
