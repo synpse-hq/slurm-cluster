@@ -1,27 +1,31 @@
-# Synpse Slurm operator
+<div align="center">
+
+  <img src="https://github.com/synpse-hq/slurm-cluster/blob/main/slurm.svg" width="200px">
+  <br>
+
+  **Automated Slurm setup for development, testing and training.**
+
+  ---
+
+  <p align="center">
+    <a href="https://slurm.schedmd.com/documentation.html">Slurm docs</a> •   
+    <a href="https://docs.synpse.net">Docs</a> •  
+    <a href="https://discord.gg/dkgN4vVNdm">Discord</a> •
+    <a href="https://cloud.synpse.net/">Synpse Platform</a>
+  </p>
+
+</div>
+
 
 ## Deployment options
 
-- `micro` - JupyterLab, master and compute nodes. Can run srun, sbatch, however no account and storage.
 - `mini` - JupyterLab, master, compute nodes and storage. Can run srun, sbatch, squeue, sacct.
 - `multi` - All + multi-node.
 
-
-## Setting up mini slurm with accounting and storage
-
-First, need to get the /etc/munge/munge.key shared between all containers. At the moment this is just mounted form the host.
+## Prerequisites
 
 
-Debugging:
-
-1. Had to add the key to the host and change perms/owner
-
-```
-sudo groupadd 102 -r munge
-sudo useradd 102 -r -g munge -s /sbin/nologin -d /nonexistent munge
-sudo chmod 400 /etc/munge/munge.key
-sudo chown munge:munge /etc/munge/munge.key
-```
+## Troubleshooting
 
 2. Trying to use Mariadb root password for the database in the slurmddb. Might help?
 
