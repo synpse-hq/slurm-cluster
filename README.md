@@ -19,10 +19,56 @@
 
 ## Deployment options
 
+This repository contains instructions and tooling to get you a Slurm environment where you can experiment with working `sbatch`, `srun`, `sinfo` and `sacct` commands. 
+
 - `mini` - JupyterLab, master, compute nodes and storage. Can run srun, sbatch, squeue, sacct.
 - `multi` - All + multi-node.
 
 ## Prerequisites
+
+-  Linux VM, can be your own PC, university server or a cloud machine from your favorite provider such as Google Cloud Platform, AWS, Azure, Hetzner, etc.
+-  [Synpse account](https://cloud.synpse.net/) - free
+
+While the installation is straightforward, I will try to keep it verbose and simple. Our three main steps are:
+
+1. Setting up Synpse agent on your machine (it will deploy and run Slurm)
+2. Start Slurm
+3. Use the synpse CLI to securely connect to Jupyter head node so we can run Slurm jobs
+
+## Install synpse agent
+
+### Option 1: Cloud virtual machine
+
+For cloud, first go to the "Provisioning" page:
+
+![](https://github.com/synpse-hq/slurm-cluster/blob/main/static/provisioning.png)
+
+And then click on the "Provision cloud VM":
+
+![](https://github.com/synpse-hq/slurm-cluster/blob/main/static/provision.png)
+
+Insert this into the clout-init steps. Otherwise, if you already have the machine then use the steps from the "Option 2".
+
+### Option 2: On-prem machine
+
+With on-prem machines you can just go to the "Provisioning", then click on the "Provision device" and copy the command.
+
+Now, SSH into your machine and run the command.
+
+
+### Label device
+
+Once the device is online:
+
+![](https://github.com/synpse-hq/slurm-cluster/blob/main/static/online.png)
+
+Go to the labels section and add a label: "type": "server". Synpse starts applications based on labels and this is what we have in our template.
+
+![](https://github.com/synpse-hq/slurm-cluster/blob/main/static/label.png)
+
+
+## Starting Slurm
+
 
 
 ## Troubleshooting
