@@ -22,7 +22,7 @@
 This repository contains instructions and tooling to get you a Slurm environment where you can experiment with working `sbatch`, `srun`, `sinfo` and `sacct` commands. 
 
 - `mini` - JupyterLab, master, compute nodes and storage. Can run srun, sbatch, squeue, sacct.
-- `multi` - All + multi-node.
+- `multi` - (*coming soon*) All + multi-node.
 
 ## Prerequisites
 
