@@ -23,6 +23,7 @@ This repository contains instructions and tooling to get you a Slurm environment
 
 - `mini` - JupyterLab, master, compute nodes and storage. Can run srun, sbatch, squeue, sacct.
 - `multi` - (*coming soon*) All + multi-node.
+- `auto` - (*coming soon*) automated Slurm operator that can automatically add more nodes into the cluster, manages configuration, shared storage and DNS.
 
 ## Prerequisites
 
