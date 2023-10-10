@@ -16,6 +16,24 @@
 
 </div>
 
+- [What is Slurm?](#what-is-slurm)
+- [Deployment options](#deployment-options)
+- [Prerequisites](#prerequisites)
+- [Install synpse agent](#install-synpse-agent)
+  - [Option 1: Cloud virtual machine](#option-1-cloud-virtual-machine)
+  - [Option 2: On-prem machine](#option-2-on-prem-machine)
+  - [Set a name and add label to the device](#set-a-name-and-add-label-to-the-device)
+- [Starting Slurm](#starting-slurm)
+  - [Add config files](#add-config-files)
+  - [Start Slurm](#start-slurm)
+- [Connecting to Slurm](#connecting-to-slurm)
+  - [Install and configure CLI](#install-and-configure-cli)
+  - [Connect to Slurm Jupyter node](#connect-to-slurm-jupyter-node)
+- [Running a Slurm job](#running-a-slurm-job)
+- [Troubleshooting](#troubleshooting)
+- [Slurm](#slurm)
+- [TODO:](#todo)
+
 
 ## What is Slurm?
 
