@@ -57,7 +57,7 @@ With on-prem machines you can just go to the "Provisioning", then click on the "
 Now, SSH into your machine and run the command.
 
 
-### Label device
+### Set a name and add label to the device
 
 Once the device is online:
 
@@ -68,8 +68,62 @@ Go to the labels section and add a label: "type": "server". Synpse starts applic
 ![](https://github.com/synpse-hq/slurm-cluster/blob/main/static/label.png)
 
 
+Then, change the device name to `mini-slurm`, this will be helpful later.
+
 ## Starting Slurm
 
+### Add config files
+
+Click on the "default" namespace on the left and then go to the "secrets":
+
+![](https://github.com/synpse-hq/slurm-cluster/blob/main/static/secrets.png)
+
+Here, create two secrets:
+
+- `slurmConf` with contents from https://github.com/synpse-hq/slurm-cluster/blob/main/mini/slurm.conf
+- `slurmdbdConf` with contents from https://github.com/synpse-hq/slurm-cluster/blob/main/mini/slurmdbd.conf
+
+You can change the configuration here, it will be available to all Slurm components. You can find more info about slurm.conf here https://slurm.schedmd.com/slurm.conf.html.
+
+### Start Slurm
+
+Once you have the configuration secrets added, click on the "default" namespace again and then click "new application". Delete the existing example configuration and copy the yaml from this file https://github.com/synpse-hq/slurm-cluster/blob/main/mini/mini-slurm.yaml and click "Deploy".
+
+This will create:
+
+- A Slurm head node with Jupyter from which you can launch jobs
+- Slurm controller node
+- Slurmdbd node which acts as a database backend
+- MariaDB database
+- 3 compute nodes which will run the jobs
+
+Data is mounted from `/data/slurm` host directory and is used to imitate a shared storage between the components. In multi-node deployment this would be backed by NFS or similar shared filesystems.
+
+## Connecting to Slurm
+
+With Slurm you will normally interact using `sbatch` and `sacct` commands. For that we have provided the container that has Jupyter but to access it, you first need to access the machine.
+
+### Install and configure CLI
+
+To install CLI, run:
+
+```
+curl https://downloads.synpse.net/install-cli.sh | bash
+```
+
+Then, go to your profile page https://cloud.synpse.net/profile and click on "New API Key", this will show you the command how to authenticate.
+
+### Connect to Slurm Jupyter node
+
+With CLI configured, run:
+
+```
+synpse device proxy mini-slurm 8888
+```
+
+This creates a secure tunnel to our Slurm cluster machine, open it on http://localhost:8888:
+
+![](https://github.com/synpse-hq/slurm-cluster/blob/main/static/jupyter.png)
 
 
 ## Troubleshooting
