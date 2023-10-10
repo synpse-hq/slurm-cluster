@@ -141,12 +141,38 @@ Start a terminal in Jupyter and run some jobs!
 
 You can find some examples here: https://slurm.schedmd.com/sbatch.html.
 
-For example:
+For example, let's create a file `job.sh` with contents:
+
+```
+#!/bin/bash
+#
+#SBATCH --job-name=test-job
+#SBATCH --output=result.out
+#
+#SBATCH --ntasks=6
+#
+
+echo hello slurm
+```
+
+Now, to run it:
 
 ```bash
 sbatch job.sh
 ```
 
+You should see something like:
+
+```root@slurmjupyter:/home/admin# sbatch job.sh 
+Submitted batch job 11
+```
+
+and to see the results:
+
+```
+cat result.out 
+hello slurm
+```
 
 ## Troubleshooting
 
