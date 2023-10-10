@@ -17,6 +17,16 @@
 </div>
 
 
+## What is Slurm?
+
+Slurm is an open source, fault-tolerant, and highly scalable cluster management and job scheduling system for large and small Linux clusters. Slurm requires no kernel modifications for its operation and is relatively self-contained. As a cluster workload manager, Slurm has three key functions. First, it allocates exclusive and/or non-exclusive access to resources (compute nodes) to users for some duration of time so they can perform work. Second, it provides a framework for starting, executing, and monitoring work (normally a parallel job) on the set of allocated nodes. Finally, it arbitrates contention for resources by managing a queue of pending work.
+
+Slurm architecture:
+
+![](https://github.com/synpse-hq/slurm-cluster/blob/main/static/slurm.png)
+
+So, it's not that easy to get it up and running, hence this guide!
+
 ## Deployment options
 
 This repository contains instructions and tooling to get you a Slurm environment where you can experiment with working `sbatch`, `srun`, `sinfo` and `sacct` commands. 
@@ -124,6 +134,18 @@ synpse device proxy mini-slurm 8888
 This creates a secure tunnel to our Slurm cluster machine, open it on http://localhost:8888:
 
 ![](https://github.com/synpse-hq/slurm-cluster/blob/main/static/jupyter.png)
+
+Start a terminal in Jupyter and run some jobs!
+
+## Running a Slurm job
+
+You can find some examples here: https://slurm.schedmd.com/sbatch.html.
+
+For example:
+
+```bash
+sbatch job.sh
+```
 
 
 ## Troubleshooting
