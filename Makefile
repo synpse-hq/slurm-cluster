@@ -1,28 +1,29 @@
 VERSION ?= 22.04
+REGISTRY ?= ghcr.io/synpse-hq
 
 jupyter:
-	docker build -f docker/jupyter/Dockerfile --platform linux/amd64 -t ghcr.io/synpse-hq/slurm-jupyter:${VERSION} .
+	docker build -f docker/jupyter/Dockerfile --platform linux/amd64 -t ${REGISTRY}/slurm-jupyter:${VERSION} .
 
 push-jupyter: jupyter
-	docker push ghcr.io/synpse-hq/slurm-jupyter:${VERSION}
+	docker ${REGISTRY}/slurm-jupyter:${VERSION}
 
 master:
-	docker build -f docker/master/Dockerfile --platform linux/amd64 -t ghcr.io/synpse-hq/slurm-master:${VERSION} .
+	docker build -f docker/master/Dockerfile --platform linux/amd64 -t ${REGISTRY}/slurm-master:${VERSION} .
 
 push-master: master
-	docker push ghcr.io/synpse-hq/slurm-master:${VERSION}
+	docker push ${REGISTRY}/slurm-master:${VERSION}
 
 node:
-	docker build -f docker/node/Dockerfile --platform linux/amd64 -t ghcr.io/synpse-hq/slurm-node:${VERSION} .
+	docker build -f docker/node/Dockerfile --platform linux/amd64 -t ${REGISTRY}/slurm-node:${VERSION} .
 
 push-node: node
-	docker push ghcr.io/synpse-hq/slurm-node:${VERSION}
+	docker push ${REGISTRY}/slurm-node:${VERSION}
 
 slurmdbd:
-	docker build -f docker/slurmdbd/Dockerfile --platform linux/amd64 -t ghcr.io/synpse-hq/slurmdbd:${VERSION} .
+	docker build -f docker/slurmdbd/Dockerfile --platform linux/amd64 -t ${REGISTRY}/slurmdbd:${VERSION} .
 
 push-slurmdbd: slurmdbd
-	docker push ghcr.io/synpse-hq/slurmdbd:${VERSION}
+	docker push ${REGISTRY}/slurmdbd:${VERSION}
 
 
 # Build and push all images
