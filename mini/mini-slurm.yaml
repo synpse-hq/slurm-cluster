@@ -13,7 +13,6 @@ spec:
         - 8888:8888
       volumes:
         - /data/slurm:/home/admin
-        # - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
           filepath: /etc/slurm/slurm.conf
@@ -29,14 +28,10 @@ spec:
         - 6819:6819
       volumes:
         - /data/slurm:/home/admin
-        # - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
           filepath: /etc/slurm/slurm.conf
-        # - name: mungeKey
-        #   filepath: /etc/munge/munge.key
       restartPolicy: {}
-    # Slurm database daemon   
     - name: slurmdbd
       image: ghcr.io/synpse-hq/slurmdbd:22.04
       forcePull: true
@@ -46,11 +41,9 @@ spec:
         - 7000:7000
       volumes:
         - /data/slurm:/home/admin
-        # - /etc/munge:/etc/munge
       secrets:
         - name: slurmConf
           filepath: /etc/slurm/slurm.conf
-          # filepath: /etc/slurm/slurm.conf
         - name: slurmdbdConf
           filepath: /etc/slurm/slurmdbd.conf
       restartPolicy: {}
@@ -78,7 +71,6 @@ spec:
       user: admin
       volumes:
         - /data/slurm:/home/admin
-        # - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode1
@@ -93,7 +85,6 @@ spec:
       user: admin
       volumes:
         - /data/slurm:/home/admin
-        # - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode2
@@ -108,7 +99,6 @@ spec:
       user: admin
       volumes:
         - /data/slurm:/home/admin
-        # - /etc/munge:/etc/munge
       env:
         - name: SLURM_NODENAME
           value: slurmnode3
