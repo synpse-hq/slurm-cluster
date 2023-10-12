@@ -30,6 +30,8 @@
   - [Install and configure CLI](#install-and-configure-cli)
   - [Connect to Slurm Jupyter node](#connect-to-slurm-jupyter-node)
 - [Running a Slurm job](#running-a-slurm-job)
+- [Hacking](#hacking)
+  - [Adding more packages into the workers](#adding-more-packages-into-the-workers)
 - [Troubleshooting](#troubleshooting)
     - [Somehow slurm master was stopped? Had to SSH, exec into the slurmmaster container and start the service within it](#somehow-slurm-master-was-stopped-had-to-ssh-exec-into-the-slurmmaster-container-and-start-the-service-within-it)
     - [No cluster issues in the database](#no-cluster-issues-in-the-database)
@@ -191,6 +193,20 @@ and to see the results:
 cat result.out 
 hello slurm
 ```
+
+## Hacking
+
+You can check `Makefile` for image build targets. Set your `REGISTRY=my-own-registry` and then run:
+
+```
+make all
+```
+
+This will rebuild all Docker images. 
+
+### Adding more packages into the workers
+
+You can edit the docker/node/Dockerfile and add more packages into the image. Then, rebuild the images, restart your application and you have it :)
 
 ## Troubleshooting
 
