@@ -26,7 +26,6 @@ RUN apt-get update -qq --fix-missing && \
     rm -rf /root/.cache && \
     rm -rf /var/lib/apt/lists/*
 
-# RUN apt update -y && apt install munge -y && apt install vim -y && apt install build-essential -y && apt install git -y && apt-get install mariadb-server -y && apt install wget -y
 
 # ARG DEBIAN_FRONTEND=noninteractive
 # RUN apt install slurmd slurmdbd slurm-client slurmctld -y

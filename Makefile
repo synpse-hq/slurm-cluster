@@ -5,7 +5,7 @@ jupyter:
 	docker build -f docker/jupyter/Dockerfile --platform linux/amd64 -t ${REGISTRY}/slurm-jupyter:${VERSION} .
 
 push-jupyter: jupyter
-	docker ${REGISTRY}/slurm-jupyter:${VERSION}
+	docker push ${REGISTRY}/slurm-jupyter:${VERSION}
 
 master:
 	docker build -f docker/master/Dockerfile --platform linux/amd64 -t ${REGISTRY}/slurm-master:${VERSION} .

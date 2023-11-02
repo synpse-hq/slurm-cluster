@@ -34,6 +34,9 @@ RUN apt-get update -qq --fix-missing && \
     rm -rf /root/.cache && \
     rm -rf /var/lib/apt/lists/*
 
+# Make Python3 available as `python`
+# Also ensure that pip points to pip3
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 RUN pip install jupyterlab_slurm
 
