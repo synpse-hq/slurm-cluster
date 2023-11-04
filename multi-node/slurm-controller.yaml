@@ -1,0 +1,79 @@
+name: mini-controller
+scheduling:
+  type: Conditional
+  selectors:
+    type: server
+spec:
+  containers:
+    # Head node (job launcher)
+    - name: slurmjupyter
+      image: ghcr.io/synpse-hq/slurm-jupyter:22.04
+      forcePull: true
+      hostname: slurmjupyter
+      ports:
+        - 8888:8888
+      volumes:
+        - /data/slurm:/home/admin
+      secrets:
+        - name: slurmConf
+          filepath: /etc/slurm/slurm.conf
+      restartPolicy: {}
+    # Slurm controller server
+    - name: slurmmaster
+      image: ghcr.io/synpse-hq/slurm-master:22.04
+      forcePull: true
+      hostname: slurmmaster
+      user: admin
+      ports:
+        - 6817:6817
+        - 6818:6818
+        - 6819:6819
+      volumes:
+        - /data/slurm:/home/admin
+      secrets:
+        - name: slurmConf
+          filepath: /etc/slurm/slurm.conf
+      restartPolicy: {}
+    # Accounting, job tracking
+    - name: slurmdbd
+      image: ghcr.io/synpse-hq/slurmdbd:22.04
+      forcePull: true
+      hostname: slurmdbd
+      user: slurm
+      ports:
+        - 7000:7000
+      secrets:
+        - name: slurmConf
+          filepath: /etc/slurm/slurm.conf
+        - name: slurmdbdConf
+          filepath: /etc/slurm/slurmdbd.conf
+      restartPolicy: {}
+    - name: mariadb
+      image: mariadb
+      hostname: mariadb
+      ports:
+        - 3306:3306
+      volumes:
+        - /data/slurm-maria-db:/var/lib/mysql
+      env:
+        - name: MARIADB_USER
+          value: slurm
+        - name: MARIADB_PASSWORD
+          value: slurmslurm
+        - name: MARIADB_ROOT_PASSWORD
+          value: dbroot-password
+        - name: MARIADB_DATABASE
+          value: slurm
+      restartPolicy: {}
+    # NFS (shared filesystem) server
+    - name: nfs
+      networkMode: host
+      privileged: true
+      image: itsthenetwork/nfs-server-alpine:latest
+      ports:
+        - "2049:2049"
+      env:
+        - name: SHARED_DIRECTORY
+          value: /nfsshare
+      volumes:
+        - /data/nfs:/nfsshare

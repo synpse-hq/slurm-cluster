@@ -1,0 +1,21 @@
+name: slurm-cpu-node
+scheduling:
+  type: Conditional
+  selectors:
+    type: node-cpu
+spec:
+  containers:
+    - name: slurm-cpu-node
+      image: ghcr.io/synpse-hq/slurm-node:22.04-cpu
+      forcePull: true
+      user: admin
+      volumes:
+        - /data/slurm:/home/admin
+      env:
+        - name: CONTROLLER_HOST
+          value: "10.154.0.2"
+        - name: CONTROLLER_PORT
+          value: "6817"      
+      secrets:
+        - name: slurmCpuConf
+          filepath: /etc/slurm/slurm.conf
