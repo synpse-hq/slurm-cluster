@@ -10,12 +10,24 @@ spec:
       forcePull: true
       user: admin
       volumes:
-        - /data/slurm:/home/admin
+        - /data/slurm:/scratch
+        - /tmp:/tmp
       env:
         - name: CONTROLLER_HOST
           value: "10.154.0.2"
         - name: CONTROLLER_PORT
           value: "6817"      
-      secrets:
-        - name: slurmCpuConf
-          filepath: /etc/slurm/slurm.conf
+      mount:
+        - type: volume
+          target: /home/admin
+          source: nfs
+          bindOptions: {}
+          volumeOptions:
+            driverConfig:
+              name: local
+              options:
+                device: :/
+                o: addr=10.154.0.2,nfsvers=4
+                type: nfs
+          tmpfsOptions: {}
+      # privileged: true

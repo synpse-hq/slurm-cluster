@@ -27,11 +27,11 @@ push-slurmdbd: slurmdbd
 
 # Compute nodes
 
-node-cpu:
-	docker build -f docker/node/Dockerfile.cpu --platform linux/amd64 -t ${REGISTRY}/slurm-node:${VERSION}-cpu .
+# node-cpu:
+# 	docker build -f docker/node/Dockerfile.cpu --platform linux/amd64 -t ${REGISTRY}/slurm-node:${VERSION}-cpu .
 
-push-node-cpu: node-cpu
-	docker push ${REGISTRY}/slurm-node:${VERSION}-cpu
+# push-node-cpu: node-cpu
+# 	docker push ${REGISTRY}/slurm-node:${VERSION}-cpu
 
 # Build and push all images
 all: push-node push-master push-jupyter push-slurmdbd

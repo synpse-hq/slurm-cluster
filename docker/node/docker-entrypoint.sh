@@ -1,17 +1,26 @@
 #!/bin/bash
 
-# sudo sed -i "s/REPLACE_IT/CPUs=$(nproc)/g" /etc/slurm/slurm.conf
-
 sudo service munge start
 
 # Use the environment variables
-CONTROLLER_HOST=${CONTROLLER_HOST}
-CONTROLLER_PORT=${CONTROLLER_PORT}
+CONTROLLER_HOST=${CONTROLLER_HOST:-}
+CONTROLLER_PORT=${CONTROLLER_PORT:-}
+HOSTNAME=${SYNPSE_DEVICE_NAME:-$(hostname)}
 
-# Using synpse device name
-HOSTNAME=${SYNPSE_DEVICE_NAME}
+if [[ -n "$SLURM_NODENAME" ]]; then
+    HOSTNAME=${SLURM_NODENAME}
+fi
 
-sudo echo "${CONTROLLER_HOST} slurmmaster" >> /etc/hosts
+# Update /etc/hosts if CONTROLLER_HOST is set
+if [[ -n "$CONTROLLER_HOST" ]]; then
+    echo "${CONTROLLER_HOST} slurmmaster" | sudo tee -a /etc/hosts > /dev/null
+fi
 
-# Start slurmd in debug/foreground mode
-exec sudo slurmd -Dvvv -N ${HOSTNAME} --conf-server ${CONTROLLER_HOST} ${CONTROLLER_PORT}
+# Start slurmd with or without --conf-server parameter based on CONTROLLER_HOST
+if [[ -n "$CONTROLLER_HOST" && -n "$CONTROLLER_PORT" ]]; then
+    # If CONTROLLER_HOST and CONTROLLER_PORT are set, use them as parameters
+    exec sudo slurmd -Dvvv -N "$HOSTNAME" --conf-server "$CONTROLLER_HOST:$CONTROLLER_PORT"
+else
+    # If CONTROLLER_HOST is not set, start slurmd without --conf-server parameter
+    exec sudo slurmd -Dvvv -N "$HOSTNAME"
+fi
