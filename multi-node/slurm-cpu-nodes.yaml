@@ -6,15 +6,18 @@ scheduling:
 spec:
   containers:
     - name: slurm-cpu-node
-      image: ghcr.io/synpse-hq/slurm-node:22.04-cpu
+      image: ghcr.io/synpse-hq/slurm-node:22.04
       forcePull: true
       user: admin
+      ports:
+        - 6818:6818
+        # - 6819:6819
       volumes:
         - /data/slurm:/scratch
         - /tmp:/tmp
       env:
         - name: CONTROLLER_HOST
-          value: "10.154.0.2"
+          value: "10.154.0.4"
         - name: CONTROLLER_PORT
           value: "6817"      
       mount:
@@ -27,7 +30,7 @@ spec:
               name: local
               options:
                 device: :/
-                o: addr=10.154.0.2,nfsvers=4
+                o: addr=10.154.0.4,nfsvers=4
                 type: nfs
           tmpfsOptions: {}
       # privileged: true

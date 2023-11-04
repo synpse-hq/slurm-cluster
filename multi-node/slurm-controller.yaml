@@ -1,8 +1,8 @@
-name: mini-controller
+name: slurm-controller
 scheduling:
   type: Conditional
   selectors:
-    type: server
+    type: controller
 spec:
   containers:
     # Head node (job launcher)
@@ -30,6 +30,8 @@ spec:
         - 6819:6819
       volumes:
         - /data/slurm:/home/admin
+        - /data/slurmctld-spool:/var/spool
+        - /data/slurmctld-logs:/var/log/slurm
       secrets:
         - name: slurmConf
           filepath: /etc/slurm/slurm.conf
@@ -71,9 +73,9 @@ spec:
       privileged: true
       image: itsthenetwork/nfs-server-alpine:latest
       ports:
-        - "2049:2049"
+        - 2049:2049
       env:
         - name: SHARED_DIRECTORY
           value: /nfsshare
       volumes:
-        - /data/nfs:/nfsshare
+        - /data/slurm:/nfsshare
