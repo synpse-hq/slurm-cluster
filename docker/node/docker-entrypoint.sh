@@ -12,9 +12,9 @@ if [[ -n "$SLURM_NODENAME" ]]; then
 fi
 
 # Update /etc/hosts if CONTROLLER_HOST is set
-if [[ -n "$CONTROLLER_HOST" ]]; then
-    echo "${CONTROLLER_HOST} slurmmaster" | sudo tee -a /etc/hosts > /dev/null
-fi
+# if [[ -n "$CONTROLLER_HOST" ]]; then
+#     echo "${CONTROLLER_HOST} slurmmaster" | sudo tee -a /etc/hosts > /dev/null
+# fi
 
 # Start slurmd with or without --conf-server parameter based on CONTROLLER_HOST
 if [[ -n "$CONTROLLER_HOST" && -n "$CONTROLLER_PORT" ]]; then
